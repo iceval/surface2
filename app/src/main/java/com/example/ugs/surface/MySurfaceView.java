@@ -15,6 +15,9 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         x = event.getX();
+        y = event.getY();
+        r =0;
+        press=true;
 
         return super.onTouchEvent(event);
     }
@@ -46,20 +49,24 @@ Paint p = new Paint();
 
     }
     float x = 0;
+    float y = 0;
+    float r = 0;
+    boolean press=false;
     class MyThread extends Thread{
         public void run (){
 
             while (true) {
                 Canvas canvas = holder.lockCanvas();
-                canvas.drawColor(Color.CYAN);
-                canvas.drawCircle(x,200,30,p);
+                canvas.drawColor(Color.BLUE);
+                if (press==true){
+                canvas.drawCircle(x,y,r,p);}
                 holder.unlockCanvasAndPost(canvas);
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                x++;
+                r+=5;
             }
         }
     }
